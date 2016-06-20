@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>首页</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<!--标准mui.css-->
+		<link rel="stylesheet" href="css/mui.min.css">
+		<!--App自定义的css-->
+		<link rel="stylesheet" type="text/css" href="css/app.css" />
+		<link rel="stylesheet" href="css/appCommon.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="background: #209153;">
+			<h1 class="mui-title" style="color: white;">首页</h1>
+		</header>
+		<div id="slider" class="mui-slider" style="margin-top: 30px;">
+			<div class="mui-slider-indicator">
+				<div class="mui-indicator mui-active"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+				<div class="mui-indicator"></div>
+			</div>
+		</div>
+
+		<ul class="mui-table-view mui-grid-view mui-grid-9">
+			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+				<a href="#" onclick='pageJump("plus/geolocation.html")'>
+					<span class="mui-icon mui-icon-Glocation"><span id="messgeCount"></span></span>
+					<div class="mui-media-body">交通报销</div>
+				</a>
+			</li>
+			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+				<a href="#" onclick='pageJump("")'>
+					<span class="mui-icon mui-icon-GlocationList"></span>
+					<div class="mui-media-body">报销记录</div>
+				</a>
+			</li>
+			<li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+				<a href="#">
+					<span class="mui-icon mui-icon-more"></span>
+					<div class="mui-media-body">更多</div>
+				</a>
+			</li>
+		</ul>
+
+
+		<script src="js/mui.min.js"></script>
+		<script type="text/javascript" src="js/app.js" ></script>
+		<script type="text/javascript" charset="utf-8">
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui.plusReady(function() {/*
+				
+				var options = {
+					cover: false
+				};
+				console.log("if条件外" + localStorage.getItem("runFirst"));
+				if (plus.os.name == "iOS" && localStorage.getItem("runFirst") != "Yes") {
+					console.log("112312312");
+					console.log("第一次启动" + localStorage.getItem("runFirst"));
+					console.log(plus.push.getClientInfo().token);
+					tokenUpload(plus.push.getClientInfo().token);
+				}
+				// 监听点击消息事件 
+				plus.push.addEventListener("click", function(msg) {
+					var obj = msg.payload;
+					info(obj.name, obj.time);
+				}, false);
+				// 监听在线消息事件
+				plus.push.addEventListener("receive", function(msg) {
+					//ios时弹出对话框，切到通知详情页面
+					if (plus.os.name == "iOS") {
+						var obj = msg.payload;
+						var btnArray = ['否', '是'];
+						mui.confirm('是否立即查看？', '你有一条最新的检查结果的通知！', btnArray, function(e) {
+							if (e.index == 1) {
+								//执行info函数跳转通知详情页面
+								info(obj.name, obj.time);
+							} else {
+								//保持当前页面
+							}
+						})
+					} else {
+						//安卓机器解析payload信息进入通知详情页面
+						//alert("receive " + msg.payload.toString());
+						var xinxi = msg.payload.toString().split(",");
+						//名字+逗号+时间
+						info(xinxi[0], xinxi[1]);
+					}
+				}, false);
+				
+				getMessageCount();
+				
+				var backButtonPress = 0;
+				console.log(backButtonPress);
+				mui.back = function(event) {
+					console.log(backButtonPress);
+					backButtonPress++;
+					if (backButtonPress > 1) {
+						plus.runtime.quit();
+					} else {
+						plus.nativeUI.toast('再按一次退出应用');
+					}
+					setTimeout(function() {
+						backButtonPress = 0;
+					}, 1000);
+					return false;
+				};*/
+			});
+			
+			function getMessageCount(){
+			//显示历史一览用
+			//plus.nativeUI.showWaiting("正在加载");
+			console.log(API_ADDRESS+'report/queryMessageCount.do');
+			mui.ajax(API_ADDRESS+'report/queryMessageCount.do', {
+				dataType: 'json', //服务器返回json格式数据
+				type: 'post', //HTTP请求类型
+				timeout: 5000, //超时时间设置为10秒；
+				success: function(data) {
+					//服务器返回响应，根据响应结果，分析是否登录成功；
+					console.log( JSON.stringify(data.result));
+					var obj = data.result;
+					var messgeCount = document.getElementById("messgeCount");
+					if(obj.count != '0'){
+						console.log(obj.count);
+						messgeCount.className = 'mui-badge';
+						messgeCount.innerHTML = obj.count;
+						console.log(messgeCount.value);
+					}else{
+						
+					}
+				},
+				error: function(xhr, type, errorThrown) { //异常处理；
+					
+					mui.alert('数据服务器链接失败', '错误', function() {
+					
+					});
+				}
+			});
+		};
+		</script>
+	</body>
+
+</html>

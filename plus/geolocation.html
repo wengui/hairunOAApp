@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<meta name="HandheldFriendly" content="true"/>
+		<meta name="MobileOptimized" content="320"/>
+		<title>交通报销</title>
+		<link rel="stylesheet" href="../css/mui.min.css" />
+		<link rel="stylesheet" href="../css/appCommon.css" />
+		<script type="text/javascript" src="../js/common.js"></script>
+		<script type="text/javascript" src="../js/mui.min.js" ></script>
+		<script type="text/javascript">
+			var count = 1;
+			
+			
+			var address = '';
+			function geoInf( position) {
+				// 地址位置
+				address = position.address.poiName;
+			}
+			
+			// 通过定位模块获取位置信息
+			function getGeocode(id){
+				//outSet( "获取定位位置信息:" );
+				plus.geolocation.getCurrentPosition( geoInf, function ( e ) {
+					//outSet( "获取定位位置信息失败："+e.message );
+				},{geocode:true,provider:'amap'});
+				
+				if(address == undefined){
+					plus.nativeUI.toast("定位失败，请手动输入地址。");
+					return false;
+				}else{
+					// 获取地址
+					document.getElementById(id).value = address;
+				}
+				
+			}
+			
+			function Gadd(){
+				//plus.nativeUI.toast('添加新纪录');
+				var uiList = document.getElementById("list");
+				var btns = mui('.mui-input-addin');
+				var flag = true;
+				btns.each(function(i, btn) {
+					if(btn.value == ''){
+						mui.alert("请填写信息完整后再继续添加");
+						btn.focus();
+						flag = false;
+					}
+					
+					return flag;
+				});
+				
+				if(flag){
+				count = count+1;
+				var start = 'start'+count;
+				var destination = 'destination'+count;
+				var distance = 'distance'+count;
+				var money = 'money'+count;
+				var li = document.createElement('li');
+				li.className = 'mui-table-view-li';
+				var naiyo = '';
+				naiyo += '<div id="dcontent" class="dcontent-div">';
+				naiyo += '<div class="mui-input-row mui-search">';
+				naiyo += '<div>';
+				naiyo += '<span class="mui-icon mui-icon-start"></span>';
+				naiyo += '<input id="'+start+'" class="mui-input-search mui-input-addin"   placeholder="输入起点">';
+				naiyo += '<span class="mui-icon mui-icon-archives" onclick="getGeocode('+"'"+start+"'"+')"></span>';
+				naiyo += '</div>';
+				naiyo += '<div>';
+				naiyo += '<span class="mui-icon mui-icon-destination"></span>';
+				naiyo += '<input id="'+destination+'" class="mui-input-search mui-input-addin"   placeholder="输入终点">';
+				naiyo += '<span class="mui-icon mui-icon-archives" onclick="getGeocode('+"'"+destination+"'"+')"></span>';
+				naiyo += '</div>';
+				naiyo += '<div>';
+				naiyo += '<span class="mui-icon mui-icon-money"></span>';
+				naiyo += '<input id="'+distance+'" class="mui-input-search mui-input-addin"  onblur="countMoney('+count+')"   placeholder="输入公里数">';
+				naiyo += '<span class="mui-icon mui-icon-bg"></span>';
+				naiyo += '</div>';
+				naiyo += '<div>';
+				naiyo += '<span class="mui-icon mui-icon-case"></span>';
+				naiyo += '<input id="cause1" class="mui-input-search mui-input-addin"   placeholder="输入事由">';
+				naiyo += '<span class="mui-icon mui-icon-bg"></span>';
+				naiyo += '</div>';
+				naiyo += '<div>';
+				naiyo += '<span class="mui-icon mui-icon-money"></span>';
+				naiyo += '<input id="'+money+'" class="mui-input-search mui-input-addin" style="border:0px;font-weight: bold;" value="总计：0元" disabled>';
+				naiyo += '<span class="mui-icon mui-icon-bg"></span>';
+				naiyo += '</div>';
+				naiyo += '</div>';
+				naiyo += '</div>';
+				li.innerHTML = naiyo;
+				uiList.appendChild(li);
+				
+				
+				};
+			};
+			
+			function countMoney(count){
+				
+				var distance = document.getElementById("distance"+count);
+				var julivalue = distance.value;
+				if(isNaN(julivalue)){
+					mui.alert("你输入的不是数字，请重新输入。")
+					distance.value = '';
+					distance.focus();
+					return false;
+				}else{
+					distance.value = julivalue + 'km';
+				}
+				var money = document.getElementById("money"+count);
+				if(julivalue != ''){
+					money.value = '总计：'+(julivalue) * 2+'元';
+				}else{
+					money.value = '总计：'+(0) * 2+'元';
+				}
+			}
+			
+		</script>
+		<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
+	</head>
+	<body style="background: white;">
+		<header class="mui-bar mui-bar-nav" style="background: #209153;">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="color: white;"></a>
+			<a class="mui-icon mui-icon-Gadd mui-pull-right" onclick='Gadd()'></a>
+			<h1 class="mui-title" style="color: white;">交通报销</h1>
+		</header>
+
+		<ul id="list" class="mui-table-view mui-table-view-chevron">
+			<li class="mui-table-view-li">
+				<!--第一条记录使用 class="dcontent"-->
+				<div id="dcontent" class="dcontent">
+					<br/>
+					<div class="mui-input-row mui-search">
+						<div>
+							<span class="mui-icon mui-icon-start"></span>
+							<input id="start1" class="mui-input-search mui-input-addin"   placeholder="输入起点">
+							<span class="mui-icon mui-icon-archives" onclick="getGeocode('start1')"></span>
+						</div>
+
+						<div>
+							<span class="mui-icon mui-icon-destination"></span>
+							<input id="destination1" class="mui-input-search mui-input-addin"   placeholder="输入终点">
+							<span class="mui-icon mui-icon-archives" onclick="getGeocode('destination1')"></span>
+						</div>
+						<div>
+							<span class="mui-icon mui-icon-money"></span>
+							<input id="distance1" class="mui-input-search mui-input-addin"  onblur="countMoney(1)"   placeholder="输入公里数">
+							<span class="mui-icon mui-icon-bg" hidden="hidden"></span>
+						</div>
+						<div>
+							<span class="mui-icon mui-icon-case"></span>
+							<input id="cause1" class="mui-input-search mui-input-addin"   placeholder="输入事由">
+							<span class="mui-icon mui-icon-bg"></span>
+						</div>
+						<div>
+							<span class="mui-icon mui-icon-money"></span>
+							<input id="money1" class="mui-input-search mui-input-addin" style="border:0px;font-weight: bold;" value="总计：0元" disabled>
+							<span class="mui-icon mui-icon-bg"></span>
+						</div>
+						
+					</div>
+				</div>
+			</li>
+			
+		</ul>
+		<div class="mui-content-padded">
+				<button id='login' class="mui-btn mui-btn-commit mui-btn-primary">登录</button>
+		</div>
+	
+	</body>
+	<script type="text/javascript" src="../js/immersed.js" ></script>
+</html>

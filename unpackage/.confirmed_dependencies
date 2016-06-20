@@ -1,0 +1,168 @@
+{
+	"index.html": {
+		"resources": [
+			"css/common.css",
+			"js/update.js",
+			"js/shortcut.js",
+			"js/immersed.js"
+		],
+		"refer": [
+			"plus/device.html",
+			"plus/events.html",
+			"plus/gallery.html",
+			"plus/file.html",
+			"plus/geolocation.html",
+			"plus/accelerometer.html",
+			"plus/audio.html",
+			"plus/barcode.html",
+			"plus/camera.html",
+			"plus/downloader.html",
+			"plus/maps.html",
+			"plus/nativeui.html",
+			"plus/oauth.html",
+			"plus/proximity.html",
+			"plus/push.html",
+			"plus/runtime.html",
+			"plus/speech.html",
+			"plus/njs.html",
+			"plus/message.html"
+		]
+	},
+	"plus/device.html": {
+		"resources": [
+			"js/common.js"
+		],
+		"refer": []
+	},
+	"doc/events.html": {
+		"resources": [
+			"doc/res/doc.css",
+			"doc/res/prettify.js",
+			"doc/res/prettify.sons.css",
+			"doc/res/doc.js"
+		],
+		"refer": []
+	},
+	"plus/doc.html": {
+		"refer": [
+			"doc/events.html",
+			"doc/geolocation.html"
+		],
+		"resources": []
+	},
+	"plus/events.html": {
+		"refer": [
+			"plus/doc.html"
+		],
+		"resources": []
+	},
+	"plus/file.html": {
+		"resources": [
+			"img/fdisk.png",
+			"img/fup.png"
+		],
+		"refer": []
+	},
+	"plus/accelerometer_shake.html": {
+		"resources": [
+			"img/shake/1.jpg",
+			"img/shakedown.png",
+			"img/shakeup.png"
+		],
+		"refer": []
+	},
+	"plus/accelerometer.html": {
+		"refer": [
+			"plus/accelerometer_shake.html"
+		],
+		"resources": []
+	},
+	"plus/audio.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"js/immersed.js"
+		],
+		"refer": []
+	},
+	"plus/barcode.html": {
+		"resources": [
+			"img/barcode.png"
+		],
+		"refer": []
+	},
+	"plus/message.html": {
+		"resources": [
+			"js/common.js"
+		],
+		"refer": []
+	},
+	"plus/maps.html": {
+		"resources": [
+			"js/common.js"
+		],
+		"refer": [
+			"plus/maps_map.html"
+		]
+	},
+	"plus/maps_map.html": {
+		"resources": [
+			"plus/maps_map_sub.html"
+		],
+		"refer": [
+			"plus/maps_map_sub.html"
+		]
+	},
+	"plus/geolocation.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"js/immersed.js",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"fonts/mui.ttf",
+			"css/appCommon.css"
+		],
+		"refer": [
+			"plus/doc.html"
+		]
+	},
+	"plus/geolocationTest.html": {
+		"resources": [
+			"js/common.js",
+			"css/common.css",
+			"css/mui.min.css",
+			"js/immersed.js"
+		],
+		"refer": [
+			"plus/doc.html"
+		]
+	},
+	"doc/geolocation.html": {
+		"resources": [
+			"doc/res/doc.css",
+			"doc/res/prettify.js",
+			"doc/res/prettify.sons.css",
+			"doc/res/doc.js"
+		],
+		"refer": []
+	},
+	"plus/speech.html": {
+		"resources": [
+			"js/common.js"
+		],
+		"refer": []
+	},
+	"home.html": {
+		"resources": [
+			"js/app.js",
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css",
+			"css/appCommon.css"
+		],
+		"refer": [
+			"plus/geolocation.html"
+		]
+	}
+}
